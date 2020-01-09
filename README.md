@@ -5,8 +5,13 @@
  -->
 # qn-dva
 简单抽离dva中的model逻辑, 用法和dva一样
+
+## 运用场景
+- 结合reducer和saga，方便开发
+
+## 使用方式
+- model 配置
 ```js
-// model 配置
 export default {
     namespace: 'xx',
     reducers: {
@@ -19,19 +24,41 @@ export default {
     }
 }
 ```
-## 运用场景
-- 结合reducer和saga，方便开发
-
-## 使用方式
+- 引入dva并初始化
+> 注意调用start会返回store，此store就是redux创建好的；connect方法可以连接组件和page
 ```js
 import dva from 'qn-dva'
-import models from './models' // models 是个数组, [model1,model2]
-
+import models from './models' 
 
 const app = dva();
-
 models.forEach(app.model);
+let { store, connect } = app.start();
+export {
+    store,
+    connect
+}
+```
 
-let store = app.start();
-export default store   // redux 的store
+- 连接组件或者page
+``` js
+import { connect } from '../../store'
+const config = {
+    mixins: [],
+    data: {
+        
+    },
+    props: {
+    },
+    didMount() { }, // 此生命周期一定要有
+    didUnmount() { }, // 此生命周期一定要有
+    methods: {
+        
+    },
+}
+const mapState = state => {
+    return {
+        xxx: state[命名空间名称]
+    }
+}
+Component(connect(mapState, config));
 ```
