@@ -2,12 +2,13 @@
  * @Author: zhengxi 
  * @Date: 2020-01-09 13:10:28 
  * @Last Modified by: zhengxi
- * @Last Modified time: 2020-01-09 14:48:21
+ * @Last Modified time: 2020-01-09 20:16:23
  */
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import * as sagaEffects from 'redux-saga/effects'
 import { NAMESPACE_SEP } from './constant'
+import injectStore from './connect'
 
 export default function() {
     const app = {
@@ -25,7 +26,8 @@ export default function() {
         let sagaMiddleware = createSagaMiddleware();
         let store = applyMiddleware(sagaMiddleware)(createStore)(reducers);
         sagas.forEach(sagaMiddleware.run);
-        return store;
+        let connect = injectStore(store);
+        return { store, connect };
     }
     function getSagas(app) {
         let sagas = [];

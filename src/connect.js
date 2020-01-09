@@ -1,11 +1,8 @@
 
 import diff from './diff'
 
-const app = getApp();
-const { store } = app.globalData;
 let listener;
-
-function stateHandle(mapState) {
+function stateHandle(mapState, store) {
     this.dispatch = store.dispatch;
     if (!mapState) return;
     listener = store.subscribe(() => {
@@ -19,7 +16,7 @@ function stateHandle(mapState) {
         this.setData(pathState);
     })
 }
-function connect(mapState, config) {
+function connect(mapState, config, store) {
     let props = mapState && mapState(store.getState()) || {};
     let didMountOld = config.didMount;
     let didUnmountOld = config.didUnmount;
@@ -30,7 +27,7 @@ function connect(mapState, config) {
         ...props
     }
     let didMount = function () {
-        stateHandle.bind(this)(mapState);
+        stateHandle.bind(this)(mapState, store);
         didMountOld.bind(this)();
     }
     let didUnmount = function () {
@@ -38,7 +35,7 @@ function connect(mapState, config) {
         didUnmountOld.bind(this)();
     }
     let onLoad = function () {
-        stateHandle.bind(this)(mapState);
+        stateHandle.bind(this)(mapState, store);
         onLoadOld.bind(this)()
     }
     let onUnload = function () {
@@ -51,5 +48,9 @@ function connect(mapState, config) {
     config.onUnload = onUnload;
     return config;
 }
-
-export default connect;
+function injectStore(store) {
+    return function(mapState, config) {
+        return connect(mapState,config, store)
+    }
+}
+export default injectStore;
