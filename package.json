@@ -1,6 +1,6 @@
 {
   "name": "qn-dva",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "",
   "main": "src/index.js",
   "scripts": {
@@ -10,8 +10,13 @@
     "type": "git",
     "url": "git+https://github.com/zhengxif/qn-dva.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "javascript",
+    "redux",
+    "saga",
+    "model"
+  ],
+  "author": "zhengxi <1852909601@qq.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/zhengxif/qn-dva/issues"
