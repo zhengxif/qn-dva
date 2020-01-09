@@ -8,6 +8,7 @@
 
 ## 运用场景
 - 结合reducer和saga，方便开发
+- 利用connect 连接组件
 
 ## 使用方式
 - model 配置
