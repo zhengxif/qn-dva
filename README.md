@@ -53,7 +53,14 @@ const config = {
     didMount() { }, // 此生命周期一定要有
     didUnmount() { }, // 此生命周期一定要有
     methods: {
-        
+        aa() {
+            this.dispatch({
+                type: 'xx/xx',
+                payload: {
+                    xxx
+                }
+            })
+        }
     },
 }
 const mapState = state => {
