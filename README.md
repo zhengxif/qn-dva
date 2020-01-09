@@ -25,7 +25,7 @@ export default {
 ## 使用方式
 ```js
 import dva from 'qn-dva'
-import models from './models' // models 是个数组
+import models from './models' // models 是个数组, [model1,model2]
 
 
 const app = dva();
