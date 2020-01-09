@@ -1,0 +1,24 @@
+{
+  "name": "qn-dva",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhengxif/qn-dva.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zhengxif/qn-dva/issues"
+  },
+  "homepage": "https://github.com/zhengxif/qn-dva#readme",
+  "dependencies": {
+    "redux": "^4.0.5",
+    "redux-saga": "^1.1.3"
+  }
+}
