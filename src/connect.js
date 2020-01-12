@@ -3,6 +3,7 @@ import diff from './diff'
 
 let listener;
 function set(mapState, store) {
+    if (!mapState) return;
     let prevState = this.data;
     let preStatePartials = {};
     let currentState = mapState(store.getState());
