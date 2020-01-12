@@ -2,18 +2,21 @@
 import diff from './diff'
 
 let listener;
-function stateHandle(mapState, store) {
+function set(mapState, store) {
+    let prevState = this.data;
+    let preStatePartials = {};
+    let currentState = mapState(store.getState());
+    Object.keys(currentState).forEach(key => {
+        preStatePartials[key] = prevState[key];
+    })
+    let pathState = diff(currentState, preStatePartials);
+    this.setData(pathState);
+}
+function subscribeHandle(mapState, store) {
     this.dispatch = store.dispatch;
     if (!mapState) return;
     listener = store.subscribe(() => {
-        let prevState = this.data;
-        let preStatePartials = {};
-        let currentState = mapState(store.getState());
-        Object.keys(currentState).forEach(key => {
-            preStatePartials[key] = prevState[key];
-        })
-        let pathState = diff(currentState, preStatePartials);
-        this.setData(pathState);
+        set.bind(this)(mapState, store);
     })
 }
 function connect(mapState, config, store) {
@@ -27,7 +30,10 @@ function connect(mapState, config, store) {
         ...props
     }
     let didMount = function () {
-        stateHandle.bind(this)(mapState, store);
+        // 首次手动执行setData
+        set.bind(this)(mapState, store);
+        // 监听处理
+        subscribeHandle.bind(this)(mapState, store);
         didMountOld.bind(this)();
     }
     let didUnmount = function () {
@@ -35,7 +41,10 @@ function connect(mapState, config, store) {
         didUnmountOld.bind(this)();
     }
     let onLoad = function () {
-        stateHandle.bind(this)(mapState, store);
+        // 首次手动执行setData
+        set.bind(this)(mapState, store);
+        // 监听处理
+        subscribeHandle.bind(this)(mapState, store);
         onLoadOld.bind(this)()
     }
     let onUnload = function () {
